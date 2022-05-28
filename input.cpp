@@ -1,0 +1,31 @@
+#include <iostream>
+
+#include <fstream>
+#include <vector>
+#include <string>
+#include <boost/tokenizer.hpp>
+
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+	int strlen;
+	int i;
+	int input[4];
+	
+	for(i=0; argv[1][i]!='\0'; ++i);
+	
+	printf("%s %d \n", argv[1], i);
+	strlen = i;
+
+	/*
+	for (i = 0 ; i < 4; i++ )
+	{
+	  input[i] = atoi(argv[i]);  
+	  printf("%d\n", input[i]);
+	}
+	*/
+
+	return 0;
+}
