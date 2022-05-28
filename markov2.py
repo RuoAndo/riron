@@ -10,7 +10,7 @@ transitionMatrix = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]]
 
 if sum(transitionMatrix[0])+sum(transitionMatrix[1])+sum(transitionMatrix[1]) != 3:
     print("Transition matrix is wrong.")
-else: print("invalid.")
+else: print("OK.")
 
 alist = []
 
