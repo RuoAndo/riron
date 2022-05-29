@@ -5,7 +5,7 @@ import sys
 # The statespace
 states = ["Chabudai","Husuma","TV"]
 
-transitionName = [["CC","CH","CT"],["HC","HH","HT"],["TC","TH","TT"]]
+transitionName = [["CC","CT","CH"],["HH","HT","HC"],["TT","TH","TC"]]
 transitionMatrix = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]]
 
 if sum(transitionMatrix[0])+sum(transitionMatrix[1])+sum(transitionMatrix[1]) != 3:
@@ -17,6 +17,7 @@ alist = []
 def activity_forecast(days, cPos):
     # Choose the starting state
     currentPosition = cPos
+    alist.append(currentPosition)
     print("Start state: " + currentPosition)
     # Shall store the sequence of states taken. So, this only has the starting state for now.
     activityList = [currentPosition]
@@ -31,7 +32,7 @@ def activity_forecast(days, cPos):
                 activityList.append("Chabudai")
                 alist.append("Chabudai")
                 pass
-            elif change == "CH":
+            elif change == "CT":
                 prob = prob * 0.6
                 currentPosition = "TV"
                 activityList.append("TV")
@@ -44,15 +45,15 @@ def activity_forecast(days, cPos):
                 
         elif currentPosition == "Husuma":
             change = np.random.choice(transitionName[1],replace=True,p=transitionMatrix[1])
-            if change == "HC":
+            if change == "HH":
                 prob = prob * 0.5
-                activityList.append("TV")
-                alist.append("TV")
-                pass
-            elif change == "HH":
-                prob = prob * 0.2
-                currentPosition = "Chabudai"
                 activityList.append("Chabudai")
+                alist.append("Chabudai")
+                pass
+            elif change == "HT":
+                prob = prob * 0.2
+                currentPosition = "TV"
+                activityList.append("TV")
                 alist.append("Chabudai")
             else:
                 prob = prob * 0.3
@@ -62,16 +63,16 @@ def activity_forecast(days, cPos):
                 
         elif currentPosition == "TV":
             change = np.random.choice(transitionName[2],replace=True,p=transitionMatrix[2])
-            if change == "TH":
+            if change == "TC":
                 prob = prob * 0.1
-                activityList.append("Husuma")
-                alist.append("Husuma")
-                pass
-            elif change == "TC":
-                prob = prob * 0.2
-                currentPosition = "Chabudai"
                 activityList.append("Chabudai")
                 alist.append("Chabudai")
+                pass
+            elif change == "TH":
+                prob = prob * 0.2
+                currentPosition = "Husuma"
+                activityList.append("Husuma")
+                alist.append("Husuma")
             else:
                 prob = prob * 0.7
                 currentPosition = "TV"
