@@ -10,10 +10,10 @@ void PrintResult(void)
   int c;
 
   for (c = 'a'; c <= 'z'; c++) 
-    printf("%c:%d \n",  c, alpha[c]); 
+    printf("%c:%d ",  c, alpha[c]); 
   printf("\n\n");
   for (c = 'A'; c <= 'Z'; c++)   
-    printf("%c:%d \n",  c, alpha[c] ); 
+    printf("%c:%d ",  c, alpha[c] ); 
   printf("\n");
 }
 
