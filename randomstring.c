@@ -24,7 +24,7 @@ int main(void){
   srand((unsigned int)time(NULL));
   for(int i = 0; i < 16; i++)
     {
-      list[i] = 65 + (int)(rand() * (122 - 65 + 1.0) / (1.0 + RAND_MAX));
+      list[i] = 65 + (int)(rand() * (90 - 65 + 1.0) / (1.0 + RAND_MAX));
     }
   
   shuffle(list, 16);
