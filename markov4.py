@@ -81,25 +81,20 @@ def activity_forecast(days, cPos):
         i += 1  
 
 
-args = sys.argv
+#args = sys.argv
 
-if 2 <= len(args):
-    if args[1] == "TV" or args[1] == "Chabudai" or args[1] == "Husuma": 
+startPosition="TV"
+LENGTH = "100"
 
-        LENGTH = int(args[2])
+activity_forecast(LENGTH, args[1])
 
-        activity_forecast(LENGTH, args[1])
+print("TV:" + str((alist.count('TV')/LENGTH)*100)+"%")
+print("Chabudai:" + str((alist.count('Chabudai')/LENGTH)*100)+"%")
+print("Husuma:" + str((alist.count('Husuma')/LENGTH)*100)+"%")
 
-        print("TV:" + str((alist.count('TV')/LENGTH)*100)+"%")
-        print("Chabudai:" + str((alist.count('Chabudai')/LENGTH)*100)+"%")
-        print("Husuma:" + str((alist.count('Husuma')/LENGTH)*100)+"%")
-
-        rstring = '' 
+rstring = '' 
         
-        for i in alist:
-            rstring = rstring + i[0]
-
-        print(rstring)
+for i in alist:
+    rstring = rstring + i[0]
+    print(rstring)
             
-    else:
-        print("invalid")
