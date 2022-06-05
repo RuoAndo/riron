@@ -14,7 +14,7 @@ else: print("OK.")
 
 alist = []
 
-def activity_forecast(days, cPos):
+def generate_sequence(days, cPos):
     # Choose the starting state
     currentPosition = cPos
     alist.append(currentPosition)
@@ -82,11 +82,10 @@ def activity_forecast(days, cPos):
 
 
 #args = sys.argv
-
 startPosition="TV"
-LENGTH = "100"
+LENGTH = 100
 
-activity_forecast(LENGTH, args[1])
+generate_sequence(LENGTH, startPosition)
 
 print("TV:" + str((alist.count('TV')/LENGTH)*100)+"%")
 print("Chabudai:" + str((alist.count('Chabudai')/LENGTH)*100)+"%")
@@ -96,5 +95,5 @@ rstring = ''
         
 for i in alist:
     rstring = rstring + i[0]
-    print(rstring)
+print(rstring)
             
