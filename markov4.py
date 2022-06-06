@@ -81,7 +81,7 @@ def generate_sequence(days, cPos):
 startPosition="TV"
 #LENGTH = 100
 
-for i in range(10,300,10):
+for i in range(1,21,5):
     LENGTH = i - 1
     alist = []
     
