@@ -6,11 +6,7 @@ import sys
 states = ["Chabudai","Husuma","TV"]
 
 transitionName = [["CC","CT","CH"],["HH","HT","HC"],["TT","TH","TC"]]
-transitionMatrix = [[0.2,0.6,0.2],[0.1,0.6,0.3],[0.2,0.7,0.1]]
-
-if sum(transitionMatrix[0])+sum(transitionMatrix[1])+sum(transitionMatrix[1]) != 3:
-    print("Transition matrix is wrong.")
-else: print("OK.")
+transitionMatrix = [[0.2,0.5,0.3],[0.1,0.6,0.3],[0.5,0.5,0.0]]
 
 alist = []
 
@@ -33,25 +29,7 @@ def generate_sequence(days, cPos):
                 alist.append("Chabudai")
                 pass
             elif change == "CT":
-                prob = prob * 0.6
-                currentPosition = "TV"
-                activityList.append("TV")
-                alist.append("TV")
-            else:
-                prob = prob * 0.2
-                currentPosition = "Husuma"
-                activityList.append("Husuma")
-                alist.append("Husuma")
-                
-        elif currentPosition == "Husuma":
-            change = np.random.choice(transitionName[1],replace=True,p=transitionMatrix[1])
-            if change == "HC":
                 prob = prob * 0.5
-                activityList.append("Chabudai")
-                alist.append("Chabudai")
-                pass
-            elif change == "HT":
-                prob = prob * 0.2
                 currentPosition = "TV"
                 activityList.append("TV")
                 alist.append("TV")
@@ -61,20 +39,38 @@ def generate_sequence(days, cPos):
                 activityList.append("Husuma")
                 alist.append("Husuma")
                 
+        elif currentPosition == "Husuma":
+            change = np.random.choice(transitionName[1],replace=True,p=transitionMatrix[1])
+            if change == "HC":
+                prob = prob * 0.3
+                activityList.append("Chabudai")
+                alist.append("Chabudai")
+                pass
+            elif change == "HT":
+                prob = prob * 0.6
+                currentPosition = "TV"
+                activityList.append("TV")
+                alist.append("TV")
+            else:
+                prob = prob * 0.1
+                currentPosition = "Husuma"
+                activityList.append("Husuma")
+                alist.append("Husuma")
+                
         elif currentPosition == "TV":
             change = np.random.choice(transitionName[2],replace=True,p=transitionMatrix[2])
             if change == "TC":
-                prob = prob * 0.1
+                prob = prob * 0.0
                 activityList.append("Chabudai")
                 alist.append("Chabudai")
                 pass
             elif change == "TH":
-                prob = prob * 0.2
+                prob = prob * 0.3
                 currentPosition = "Husuma"
                 activityList.append("Husuma")
                 alist.append("Husuma")
             else:
-                prob = prob * 0.7
+                prob = prob * 0.5
                 currentPosition = "TV"
                 activityList.append("TV")
                 alist.append("TV")
@@ -83,17 +79,22 @@ def generate_sequence(days, cPos):
 
 #args = sys.argv
 startPosition="TV"
-LENGTH = 100
+#LENGTH = 100
 
-generate_sequence(LENGTH, startPosition)
+for i in range(10,300,10):
+    LENGTH = i - 1
+    alist = []
+    
+    generate_sequence(LENGTH, startPosition)
 
-print("TV:" + str((alist.count('TV')/LENGTH)*100)+"%")
-print("Chabudai:" + str((alist.count('Chabudai')/LENGTH)*100)+"%")
-print("Husuma:" + str((alist.count('Husuma')/LENGTH)*100)+"%")
-
-rstring = '' 
-        
-for i in alist:
-    rstring = rstring + i[0]
-print(rstring)
+    sum = alist.count('Chabudai') + alist.count('Husuma') + alist.count('TV') 
+    
+    print("Chabudai:" + str(alist.count('Chabudai')/sum*100)+"%")
+    print("Husuma:" + str(alist.count('Husuma')/sum*100)+"%")
+    print("TV:" + str(alist.count('TV')/sum*100)+"%")
+    rstring = '' 
+    
+    for i in alist:
+        rstring = rstring + i[0]
+    print(rstring)
             
