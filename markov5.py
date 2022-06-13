@@ -96,7 +96,7 @@ def generate_sequence(days, cPos):
 
 #args = sys.argv
 startPosition="TV"
-LENGTH = 100
+LENGTH = 118
 
 generate_sequence(LENGTH, startPosition)
 
