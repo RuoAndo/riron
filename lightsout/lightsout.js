@@ -1,4 +1,9 @@
+var blink = [];
 var blink_bak = [];
+var blink_bak_2 = [];
+var blink_seq = [];
+
+var counter = 0;
 
 function LightsOut(id,columns,rows,cellsize){
     this.id = id;
@@ -12,6 +17,7 @@ function LightsOut(id,columns,rows,cellsize){
     this.frame = document.getElementById(id);
     this.clickcount = [];
     this.lit = [];
+    
     for(var y=0;y<this.rows;y++){
 	this.clickcount[y] = [];
 	this.lit[y] = [];
@@ -34,7 +40,7 @@ function LightsOut(id,columns,rows,cellsize){
 	br.clear = 'all';
 	this.frame.appendChild(br);
     }
-    this.display();
+    this.display();    
 }
 
 LightsOut.prototype.toggle = function(x,y){
@@ -49,6 +55,8 @@ function click(ev){
     if(! e) e = event.srcElement; // IE
     var lightsout = e.lightsout;
 
+	// alert(e.lightsout);
+
     e.id.match(/(.)(.)$/);
     x = Number(RegExp.$2);
     y = Number(RegExp.$1);
@@ -60,13 +68,20 @@ function click(ev){
     lightsout.toggle(x,y-1);
 
     lightsout.clickcount[y][x] = (lightsout.clickcount[y][x]+1) % 2;
-    
     lightsout.display();
 }
 
 LightsOut.prototype.display = function(){
 
-	var blink = []
+	if(counter==0)
+	{
+		//for(var y=0;y<9;y++)
+    	//	blink[y] =0
+    	for(var y=0;y<9;y++)
+    		blink_bak[y] =0
+    	for(var y=0;y<9;y++)
+    		blink_bak_2[y] =0
+    }
 
     for(var y=0;y<this.rows;y++){
 	for(var x=0;x<this.columns;x++){
@@ -75,16 +90,59 @@ LightsOut.prototype.display = function(){
 	    e.style.borderColor = (this.clickcount[y][x] == 1 ? '#ffccff' : '#ffffdd');
 	}
     }
-    
-    
+
     for(var y=0;y<this.rows;y++){
 	for(var x=0;x<this.columns;x++){
-    	blink_bak.push(this.lit[y][x])
+    	blink.push(this.lit[y][x]);
     }
-    }   
-    blink_bak.push("|\n")
+    }
+    
+    for(var y=0;y<9;y++){
+    	if(blink[y] != blink_bak_2[y])
+    		blink_bak[y]=1
+    	else
+    		blink_bak[y]=0
+    }
+    
+    if(counter > 0)
+    {
+    	for(var y=0;y<9;y++)
+    		blink_seq.push(blink_bak_2[y]);
+    	// blink_seq.reverse();
+    	
+    	blink_seq.push(" xor ")
+    	
+    	for(var y=0;y<9;y++)
+    		blink_seq.push(blink_bak[y]);
+    	// blink_seq.reverse();
+    	
+    	blink_seq.push("->")
+    	
+    	for(var y=0;y<9;y++)
+    		blink_seq.push(blink[y]);
+    	//blink_seq.reverse();
+    	
+    	blink_seq.push("<br>");
+    }
     
     var getData = document.getElementById('getData');
-    getData.innerHTML = blink_bak;
+    getData.innerHTML = blink;
+
+    var getData2 = document.getElementById('getData2');
+    getData2.innerHTML = blink_bak;
     
+    var getData3 = document.getElementById('getData3');
+    getData3.innerHTML = blink_bak_2;
+    
+    var getData4 = document.getElementById('getData4');
+    getData4.innerHTML = blink_seq;
+
+    for(var y=0;y<9;y++){
+		blink_bak_2[y] = blink.pop();
+	}
+	
+	blink_bak_2.reverse();
+	
+	counter = counter + 1;
+
 }
